@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<meta>
+	<user id="1012">
+		<username>jonny</username>
+		<password>dog</password>
+		<email>fake@fake.com</email>
+		<project id="0">
+			<name>FirstProject</name>
+			<description>This is the project description</description>
+		</project>
+		<project id="1">
+			<name>SecondProject</name>
+			<description>This is the second project</description>
+		</project>
+		<settings>
+			<bubbles>true</bubbles>
+		</settings>
+	</user>
+	<user id="1001">
+		<username>Dando18</username>
+		<password>cat</password>
+		<email>danielnichols1998@gmail.com</email>
+		<project id="0">
+			<name>Howard</name>
+			<description>Howard is a cool project</description>
+		</project>
+		<settings>
+			<bubbles>true</bubbles>
+		</settings>
+	</user>
+</meta>

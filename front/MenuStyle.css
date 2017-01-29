@@ -1,0 +1,28 @@
+.root {
+	-fx-font-family: Arial;
+}
+.card {
+	-fx-background-color: #3498db;
+	-fx-background-radius: 4;
+	-fx-alignment: center;
+}
+.card:hover {
+	-fx-background-color: #38aeff;
+}
+.cardtext {
+	-fx-font-size: 24;
+}
+.carddesc {
+	-fx-font-size: 11;
+}
+.title {
+	-fx-alignment: center;
+	-fx-font-family: Palatino Linotype;
+	-fx-font-size: 36;
+}
+.grid {
+	-fx-background-color: #bdc3c7;
+	-fx-padding: 10;
+	-fx-hgap: 5;
+	-fx-vgap: 5;
+}
