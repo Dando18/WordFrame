@@ -17,11 +17,13 @@ import javafx.util.Duration;
 public class MainMenu extends Scene {
 
 	Stage stage;
+	User user;
 
 	public MainMenu(Stage stage, double width, double height, User user) {
 		super(new StackPane(), width, height);
 
 		this.stage = stage;
+		this.user = user;
 		buildUI();
 
 	}
@@ -68,7 +70,7 @@ public class MainMenu extends Scene {
 		};
 		anim.play();
 
-		Card projects = new Card("My Projects", "Here is where my projects is shown.", this::projects);
+		Card projects = new Card("My Projects", "Here is where my projects is shown", this::projects);
 		grid.add(projects, 0, 1);
 
 		Card account = new Card("Account", "See account information", this::account);
@@ -84,7 +86,7 @@ public class MainMenu extends Scene {
 	}
 
 	private void projects(MouseEvent e) {
-		System.out.println("opening projects...");
+		stage.setScene(new ProjectMenu(stage, getWidth(), getHeight(), user));
 	}
 
 	private void account(MouseEvent e) {

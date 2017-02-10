@@ -47,6 +47,10 @@ public class LoginMenu extends Scene{
 		this.stage = stage;
 		getUsers();
 		
+		buildUI();
+	}
+	
+	private void buildUI(){
 		StackPane root = (StackPane) getRoot();
 		getStylesheets().add(LoginMenu.class.getResource("Login.css").toExternalForm());
 		
@@ -72,12 +76,12 @@ public class LoginMenu extends Scene{
 		
 		Text title = new Text(MainApplication.TITLE);
 		title.getStyleClass().add("title");
-		grid.add(title, 0, 0, 3, 1);
+		grid.add(title, 0, 0, 2, 1);
 		
 		Text username_txt = new Text("Username: ");
 		grid.add(username_txt, 0, 1);
 		
-		username_field = new TextField("username...");
+		username_field = new TextField();
 		grid.add(username_field, 1, 1);
 		
 		Text password_txt = new Text("Password: ");
@@ -113,7 +117,7 @@ public class LoginMenu extends Scene{
 	}
 	
 	private void signupPressed(ActionEvent e){
-		System.out.println("signup...");
+		stage.setScene(new SignupMenu(stage, getWidth(), getHeight(), users));
 	}
 	
 	private void loginPressed(ActionEvent e){
@@ -124,6 +128,7 @@ public class LoginMenu extends Scene{
 					break;
 				} else {
 					setInfo("Wrong Password", true);
+					password_field.setText("");
 					return;
 				}
 			}
@@ -136,7 +141,7 @@ public class LoginMenu extends Scene{
 		if(isError){
 			info.setStyle("-fx-fill: red; -fx-font-style: italic");
 		} else {
-			info.setStyle("-fx-fill: #555555; -fx-font-style: plain");
+			info.setStyle("-fx-fill: #555555; -fx-font-style: normal");
 		}
 	}
 	
@@ -173,7 +178,18 @@ public class LoginMenu extends Scene{
 				String username = element.getElementsByTagName("username").item(0).getTextContent();
 				String email = element.getElementsByTagName("email").item(0).getTextContent();
 				String password = element.getElementsByTagName("password").item(0).getTextContent();
-				users.add(new User(username, password, email, id));
+				
+				List<Project> projects = new ArrayList<Project>();
+				NodeList project_elem = element.getElementsByTagName("project");
+				for(int j=0; j<project_elem.getLength(); j++) {
+					Element elem = (Element) project_elem.item(j);
+					long project_id = Long.parseLong(elem.getAttribute("id"));
+					String name = elem.getElementsByTagName("name").item(0).getTextContent();
+					String description = elem.getElementsByTagName("description").item(0).getTextContent();
+					projects.add(new Project(name, description, project_id));
+				}
+				
+				users.add(new User(username, password, email, projects, id));
 			}
 		}
 		return users;
