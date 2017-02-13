@@ -1,5 +1,6 @@
 package front;
 
+import front.util.Util;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -17,6 +18,15 @@ public class MainApplication extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle(MainApplication.TITLE);
+		
+		try {
+			if(Util.isUnix()) {
+				System.setProperty("prism.lcdtext", "false");
+	        	System.setProperty("prism.text", "t2k");
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		
 		primaryStage.setMinWidth(MIN_WIDTH);
 		primaryStage.setMinHeight(MIN_HEIGHT);
