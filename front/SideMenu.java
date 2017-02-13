@@ -37,6 +37,7 @@ public class SideMenu extends VBox {
 	
 	public void addButton(String text, EventHandler<ActionEvent> e) {
 		Button tmp = new Button(text);
+		tmp.getStyleClass().add("sidemenu");
 		tmp.setOnAction(e);
 		tmp.setMinWidth(getPrefWidth());
 		tmp.setMaxHeight(Double.MAX_VALUE);

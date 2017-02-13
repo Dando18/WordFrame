@@ -1,8 +1,12 @@
 package front;
 
+import front.test.RichText;
+import front.util.Util;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Scene {
@@ -11,9 +15,14 @@ public class Main extends Scene {
 	
 	SideMenu menu;
 	StackPane contentPane;
+	
+	final Writer writerPane = new Writer();
+	final RichText rtPane = new RichText();
 
 	public Main(Stage stage, double width, double height, User user, Project proj) {
-		super(new StackPane(), width, height);
+		super(new StackPane(), 
+				Screen.getPrimary().getVisualBounds().getWidth(), 
+				Screen.getPrimary().getVisualBounds().getHeight());
 		
 		this.stage = stage;
 		stage.setMaxWidth(Double.MAX_VALUE);
@@ -28,8 +37,11 @@ public class Main extends Scene {
 		getStylesheets().add(Main.class.getResource("Main.css").toExternalForm());
 		
 		contentPane = new StackPane();
+		HBox.setHgrow(contentPane, Priority.ALWAYS);
 		
-		menu = new SideMenu(getWidth()*0.15, getHeight());
+		contentPane.getChildren().add(rtPane);
+		
+		menu = new SideMenu(Util.clamp(5.0, getWidth()*0.15, 100.0), getHeight());
 		menu.addButton("write", e -> System.out.println("write"));
 		menu.addButton("plan", e -> System.out.println("plan"));
 		menu.addButton("notes", e -> System.out.println("notes"));
