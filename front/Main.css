@@ -68,6 +68,14 @@
 .pressed {
 	-fx-border-color: #BDBDBD;
 }
+.nodebutton {
+	-fx-background-color: transparent;
+	-fx-text-fill: blue;
+	-fx-border-color: #EEEEEE;
+}
+.nodebutton:hover {
+	-fx-border-color: #B0B0B0;
+}
 /*
 .styled-text-area {
 	-fx-padding: 5em;
