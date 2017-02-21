@@ -35,6 +35,9 @@ public class MouseGestures {
             dragContext.x = node.getBoundsInParent().getMinX() * scale - event.getScreenX();
             dragContext.y = node.getBoundsInParent().getMinY()  * scale - event.getScreenY();
 
+            if (node instanceof Cell) {
+            	graph.setSelectedCell(((Cell) node).getCellId());
+            }
         }
     };
 

@@ -5,6 +5,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 
 public class Graph {
+	
+	Plan plan;
+	Cell selectedCell;
 
     private Model model;
 
@@ -21,7 +24,8 @@ public class Graph {
      */
     CellLayer cellLayer;
 
-    public Graph() {
+    public Graph(Plan plan) {
+    	this.plan = plan;
 
         this.model = new Model();
 
@@ -84,4 +88,26 @@ public class Graph {
     public double getScale() {
         return this.scrollPane.getScaleValue();
     }
+    
+    public void setSelectedCell(String id) {
+    	for(Cell cell : model.getAllCells()) {
+    		if(id.equals(cell.getCellId()) && !cell.getSelected()) {
+    			cell.setSelected(true);
+    			selectedCell = cell;
+    			plan.updateCellInfo(cell);
+    		} else {
+    			if(cell.equals(selectedCell)) {
+    				selectedCell = null;
+    				plan.updateCellInfo(null);
+    			}
+    			cell.setSelected(false);
+    		}
+    	}
+    }
+    
+    public Cell getSelectedCell() {
+    	return selectedCell;
+    }
+    
+    
 }

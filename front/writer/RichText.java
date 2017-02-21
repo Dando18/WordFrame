@@ -68,20 +68,11 @@ public class RichText extends VBox {
 
 	private final GenericStyledArea<ParStyle, Either<StyledText<TextStyle>, LinkedImage<TextStyle>>, TextStyle> area = new GenericStyledArea<>(
 			ParStyle.EMPTY, // default paragraph style
-			(paragraph, style) -> paragraph.setStyle(style.toCss()), // paragraph
-																		// style
-																		// setter
+			(paragraph, style) -> paragraph.setStyle(style.toCss()), // paragraph style setter
 
-			TextStyle.EMPTY.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK), // default
-																										// segment
-																										// style
+			TextStyle.EMPTY.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK), // default segment style
 			styledTextOps._or(linkedImageOps), // segment operations
-			seg -> createNode(seg, (text, style) -> text.setStyle(style.toCss()))); // Node
-																					// creator
-																					// and
-																					// segment
-																					// style
-																					// setter
+			seg -> createNode(seg, (text, style) -> text.setStyle(style.toCss()))); // create nodes and style segments
 	{
 		area.setWrapText(true);
 		area.setStyleCodecs(ParStyle.CODEC,

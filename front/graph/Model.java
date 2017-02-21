@@ -24,7 +24,7 @@ public class Model {
 
     public Model() {
 
-         graphParent = new Cell( "_ROOT_");
+         graphParent = new Cell( "_ROOT_", "root", "root");
 
          // clear model, create lists
          clear();
@@ -73,17 +73,17 @@ public class Model {
         return allEdges;
     }
 
-    public void addCell(String id, CellType type) {
+    public void addCell(String id, CellType type, String title, String content) {
 
         switch (type) {
 
         case RECTANGLE:
-            RectangleCell rectangleCell = new RectangleCell(id);
+            RectangleCell rectangleCell = new RectangleCell(id, title, content);
             addCell(rectangleCell);
             break;
 
         case TRIANGLE:
-            TriangleCell circleCell = new TriangleCell(id);
+            TriangleCell circleCell = new TriangleCell(id, title, content);
             addCell(circleCell);
             break;
 
@@ -92,7 +92,7 @@ public class Model {
         }
     }
 
-    private void addCell( Cell cell) {
+    public void addCell( Cell cell) {
 
         addedCells.add(cell);
 

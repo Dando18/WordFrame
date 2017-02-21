@@ -7,8 +7,8 @@ import javafx.scene.shape.Polygon;
 
 public class TriangleCell extends Cell {
 
-    public TriangleCell( String id) {
-        super( id);
+    public TriangleCell( String id, String title, String content) {
+        super(id, title, content);
 
         double width = 50;
         double height = 50;
@@ -20,7 +20,7 @@ public class TriangleCell extends Cell {
         triangle.setStroke(Color.RED);
         triangle.setFill(Color.RED);
         
-        Label text = new Label(id);
+        Label text = new Label(title);
         
         view.getChildren().addAll(triangle, text);
 
