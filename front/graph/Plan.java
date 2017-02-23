@@ -2,114 +2,161 @@ package front.graph;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class Plan extends HBox{
+public class Plan extends HBox {
 
 	Stage stage;
-	
+
 	Graph graph;
-	
+
 	VBox menu;
 	Button add, delete;
-	TextField text;
+	TextArea text;
 	Label info;
 	ComboBox<CellType> type;
-	
+	ColorPicker color;
+
 	public Plan(Stage stage) {
 		this.stage = stage;
-		
+
 		createGraph();
-		
+
 		createMenu();
-		
-		HBox.setHgrow(graph.getScrollPane(), Priority.ALWAYS);
+
+		HBox.setHgrow(graph.getScrollPane(), Priority.SOMETIMES);
 		getChildren().addAll(graph.getScrollPane(), menu);
 	}
-	
+
 	private void createGraph() {
 		graph = new Graph(this);
-		
+
 		Model model = graph.getModel();
 
-        graph.beginUpdate();
+		graph.beginUpdate();
 
-        
-        model.addCell("Cell A", CellType.RECTANGLE, "A", "this is cell a");
-        model.addCell("Cell B", CellType.RECTANGLE, "B", "this is cell b");
-        model.addCell("Cell C", CellType.RECTANGLE, "C", "this is cell c");
-        model.addCell("Cell D", CellType.TRIANGLE, "D", "this is cell d");
-        model.addCell("Cell E", CellType.TRIANGLE, "E", "this is cell e");
-        model.addCell("Cell F", CellType.RECTANGLE, "F", "this is cell f");
-        model.addCell("Cell G", CellType.RECTANGLE, "G", "this is cell g");
+		model.addCell("Cell A", CellType.RECTANGLE, "A", "this is cell a");
+		model.addCell("Cell B", CellType.RECTANGLE, "B", "this is cell b");
+		model.addCell("Cell C", CellType.RECTANGLE, "C", "this is cell c");
+		model.addCell("Cell D", CellType.TRIANGLE, "D", "this is cell d");
+		model.addCell("Cell E", CellType.TRIANGLE, "E", "this is cell e");
+		model.addCell("Cell F", CellType.RECTANGLE, "F", "this is cell f");
+		model.addCell("Cell G", CellType.RECTANGLE, "G", "this is cell g");
 
-        model.addEdge("Cell A", "Cell B");
-        model.addEdge("Cell A", "Cell C");
-        model.addEdge("Cell B", "Cell C");
-        model.addEdge("Cell C", "Cell D");
-        model.addEdge("Cell B", "Cell E");
-        model.addEdge("Cell D", "Cell F");
-        model.addEdge("Cell D", "Cell G");
-    
-        
+		model.addEdge("Cell A", "Cell B");
+		model.addEdge("Cell A", "Cell C");
+		model.addEdge("Cell B", "Cell C");
+		model.addEdge("Cell C", "Cell D");
+		model.addEdge("Cell B", "Cell E");
+		model.addEdge("Cell D", "Cell F");
+		model.addEdge("Cell D", "Cell G");
 
-        graph.endUpdate();
-        
-        RandomLayout layout = new RandomLayout(graph);
-        layout.execute();
+		graph.endUpdate();
+
+		RandomLayout layout = new RandomLayout(graph);
+		layout.execute();
 	}
-	
+
 	private void createMenu() {
 		menu = new VBox();
 		menu.setSpacing(10);
 		menu.setPadding(new Insets(10, 10, 0, 10));
-		
+		//DragResizer.makeResizable(menu);
+
 		info = new Label("Edit Node");
-		text = new TextField("content...");
+		
+		text = new TextArea("content...");
+		text.setMaxWidth(200);
+		text.setPrefRowCount(4);
 		text.textProperty().addListener((observable, oldVal, newVal) -> {
-			if(graph.getSelectedCell() != null) {
+			if (graph.getSelectedCell() != null) {
 				graph.getSelectedCell().setContent(newVal);
 			}
 		});
-		
-		type = new ComboBox<> ();
+
+		type = new ComboBox<>();
 		type.getItems().setAll(CellType.values());
 		
+		color = new ColorPicker();
+		color.setOnAction(e -> {
+			if (graph.getSelectedCell() != null) {
+				graph.getSelectedCell().setBackgroundColor(color.getValue());
+			}
+		});
+
 		add = new Button("+");
 		add.getStyleClass().add("nodebutton");
-		
+		add.setOnAction(e -> {
+			Model model = graph.getModel();
+			graph.beginUpdate();
+
+			String id = "" + model.allCells.size();
+
+			model.addCell("" + model.allCells.size(), CellType.RECTANGLE, "New Cell", "default content");
+
+			if (graph.getSelectedCell() != null) {
+				model.addEdge(id, graph.getSelectedCell().cellId);
+			}
+
+			graph.endUpdate();
+		});
+
 		delete = new Button("-");
 		delete.getStyleClass().add("nodebutton");
-		
+		delete.setOnAction(e -> {
+			Cell selected = graph.getSelectedCell();
+			if (selected != null) {
+				Model model = graph.getModel();
+				graph.beginUpdate();
+				
+				model.getRemovedCells().add(selected);
+				
+				for(Edge edge : model.allEdges) {
+					if(edge.getSource().equals(selected) || edge.getTarget().equals(selected)) {
+						model.getRemovedEdges().add(edge);
+					}
+				}
+				
+				graph.endUpdate();
+			}
+		});
+
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(delete, add);
-		
-		
-		menu.getChildren().addAll(info, text, type, buttons);
+
+		menu.getChildren().addAll(info, text, type, color, buttons);
 	}
-	
-	
-	
+
 	public void updateCellInfo(Cell cell) {
-		if(cell == null) {
-			
+		String id = "";
+		String title = "";
+		String content = "";
+		Color col = null;
+
+		if (cell != null) {
+			id = cell.getCellId();
+			title = cell.getTitle();
+			content = cell.getContent();
+			col = cell.getBackgroundColor();
 		}
-		info.setText("id: " + cell.getCellId()
-					+ "\ntitle: " + cell.title);
-		text.setText(cell.content);
+		info.setText("id: " + id + "\ntitle: " + title);
+		text.setText(content);
 		type.getSelectionModel().select(getCellType(cell));
+		color.setValue(col);
 	}
-	
-	private CellType getCellType (Cell cell) {
+
+	private CellType getCellType(Cell cell) {
 		if (cell instanceof RectangleCell) {
 			return CellType.RECTANGLE;
-		} else if(cell instanceof TriangleCell) {
+		} else if (cell instanceof TriangleCell) {
 			return CellType.TRIANGLE;
 		} else {
 			return CellType.RECTANGLE;

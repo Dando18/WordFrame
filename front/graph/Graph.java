@@ -82,6 +82,12 @@ public class Graph {
 
         // merge added & removed cells with all cells
         getModel().merge();
+        
+        // moves all the edges to the back so they
+        // dont cover the cells
+        for(Edge edge : model.getAllEdges()) {
+        	edge.toBack();
+        }
 
     }
 
@@ -109,5 +115,20 @@ public class Graph {
     	return selectedCell;
     }
     
+    public void connect (String source, String target) {
+    	beginUpdate();
+    	
+    	model.addEdge(source, target);
+    	
+    	endUpdate();
+    }
+    
+    public void disconnect (Edge edge) {
+    	beginUpdate();
+    	
+    	model.getRemovedEdges().add(edge);
+    	
+    	endUpdate();
+    }
     
 }

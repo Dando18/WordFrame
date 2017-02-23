@@ -2,6 +2,7 @@ package front.graph;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
@@ -20,7 +21,14 @@ public class TriangleCell extends Cell {
         triangle.setStroke(Color.RED);
         triangle.setFill(Color.RED);
         
-        Label text = new Label(title);
+        Label title_lbl = new Label(title);
+        title_lbl.textProperty().bind(this.title);
+        
+        Label content_lbl = new Label(content);
+        content_lbl.textProperty().bind(this.content);
+        
+        VBox text = new VBox();
+        text.getChildren().addAll(title_lbl, content_lbl);
         
         view.getChildren().addAll(triangle, text);
 
