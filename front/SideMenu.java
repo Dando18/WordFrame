@@ -13,6 +13,7 @@ public class SideMenu extends VBox {
 	Button toggle;
 	VBox menu;
 	
+	boolean sliding = false;
 	boolean isShowing = true;
 	boolean isAnimating = false;
 	
@@ -32,7 +33,10 @@ public class SideMenu extends VBox {
 			menu.setTranslateX(-menu.getWidth());
 		}
 		
-		getChildren().addAll(toggle, menu);
+		if(sliding) {
+			getChildren().add(toggle);
+		}
+		getChildren().add(menu);
 	}
 	
 	public void addButton(String text, EventHandler<ActionEvent> e) {
