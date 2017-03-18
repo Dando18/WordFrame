@@ -102,9 +102,9 @@ public class RichText extends VBox {
 		Button strikeBtn = createButton("S", "strikethrough", this::toggleStrikethrough, "strikethrough");
 		Button insertImageBtn = createButton("Ins", "insertimage", this::insertImage, "Insert Image");
 		ToggleGroup alignmentGrp = new ToggleGroup();
-		ToggleButton alignLeftBtn = createToggleButton("L", alignmentGrp, "align-left", this::alignLeft);
-		ToggleButton alignCenterBtn = createToggleButton("C", alignmentGrp, "align-center", this::alignCenter);
-		ToggleButton alignRightBtn = createToggleButton("R", alignmentGrp, "align-right", this::alignRight);
+		ToggleButton alignLeftBtn = createToggleButton("", alignmentGrp, "align-left", this::alignLeft);
+		ToggleButton alignCenterBtn = createToggleButton("", alignmentGrp, "align-center", this::alignCenter);
+		ToggleButton alignRightBtn = createToggleButton("", alignmentGrp, "align-right", this::alignRight);
 		ToggleButton alignJustifyBtn = createToggleButton("J", alignmentGrp, "align-justify", this::alignJustify);
 		ColorPicker paragraphBackgroundPicker = new ColorPicker();
 		ComboBox<Integer> sizeCombo = new ComboBox<>(FXCollections.observableArrayList(5, 6, 7, 8, 9, 10, 11, 12, 13,
@@ -324,7 +324,6 @@ public class RichText extends VBox {
 			popup.hide();
 		});
 
-		area.setStyle("-fx-padding: 20;");
 
 		VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<StyledText<TextStyle>, LinkedImage<TextStyle>>, TextStyle>> vsPane = new VirtualizedScrollPane<>(
 				area);
@@ -414,7 +413,7 @@ public class RichText extends VBox {
 	}
 	
 	private void padding() {
-		updateParagraphStyleInSelection(ParStyle.padding(padding));
+		updateParagraphStyleInSelection(ParStyle.padding(padding));	
 	}
 
 	private void loadDocument() {
