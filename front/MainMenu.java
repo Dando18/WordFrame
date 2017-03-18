@@ -94,7 +94,7 @@ public class MainMenu extends Scene {
 	}
 
 	private void settings(MouseEvent e) {
-		System.out.println("opening settings...");
+		new Settings();
 	}
 
 	private void logout(MouseEvent e) {

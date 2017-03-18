@@ -56,7 +56,7 @@ public class Main extends Scene {
 		menu.addButton("write", e -> setContent(ContentType.WRITE));
 		menu.addButton("plan", e -> setContent(ContentType.PLAN));
 		menu.addButton("notes", e -> System.out.println("notes"));
-		menu.addButton("settings", e -> System.out.println("settings"));
+		menu.addButton("settings", e -> new Settings());
 		menu.addButton("exit", e -> System.out.println("exit"));
 
 		HBox split = new HBox();
