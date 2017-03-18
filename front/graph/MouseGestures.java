@@ -44,7 +44,7 @@ public class MouseGestures {
 				if (node instanceof Cell) {
 					graph.setSelectedCell(((Cell) node).getCellId());
 				}
-			}
+			} 
 		}
 	};
 

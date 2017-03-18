@@ -37,6 +37,7 @@ public class Graph {
         mouseGestures = new MouseGestures(this);
 
         scrollPane = new ZoomableScrollPane(canvas);
+        
 
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);

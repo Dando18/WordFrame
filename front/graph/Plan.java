@@ -6,6 +6,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -21,7 +22,8 @@ public class Plan extends HBox {
 	VBox menu;
 	Button add, delete;
 	TextArea text;
-	Label info;
+	TextField title_txt;
+	Label info, title;
 	ComboBox<CellType> type;
 	ColorPicker color;
 
@@ -72,6 +74,16 @@ public class Plan extends HBox {
 		//DragResizer.makeResizable(menu);
 
 		info = new Label("Edit Node");
+		
+		title = new Label("title: ");
+		title_txt = new TextField();
+		title_txt.textProperty().addListener((observable, oldVal, newVal) -> {
+			if(graph.getSelectedCell() != null) {
+				graph.getSelectedCell().setTitle(title_txt.getText());
+			}
+		}); 
+		HBox titles = new HBox();
+		titles.getChildren().addAll(title, title_txt);
 		
 		text = new TextArea("content...");
 		text.setMaxWidth(200);
@@ -132,22 +144,20 @@ public class Plan extends HBox {
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(delete, add);
 
-		menu.getChildren().addAll(info, text, type, color, buttons);
+		menu.getChildren().addAll(info, titles, text, type, color, buttons);
 	}
 
 	public void updateCellInfo(Cell cell) {
 		String id = "";
-		String title = "";
 		String content = "";
 		Color col = null;
 
 		if (cell != null) {
 			id = cell.getCellId();
-			title = cell.getTitle();
 			content = cell.getContent();
 			col = cell.getBackgroundColor();
 		}
-		info.setText("id: " + id + "\ntitle: " + title);
+		info.setText("id: " + id);
 		text.setText(content);
 		type.getSelectionModel().select(getCellType(cell));
 		color.setValue(col);

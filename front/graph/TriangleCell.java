@@ -1,5 +1,6 @@
 package front.graph;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,6 +29,7 @@ public class TriangleCell extends Cell {
         content_lbl.textProperty().bind(this.content);
         
         VBox text = new VBox();
+        text.setAlignment(Pos.CENTER);
         text.getChildren().addAll(title_lbl, content_lbl);
         
         view.getChildren().addAll(triangle, text);
