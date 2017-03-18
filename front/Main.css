@@ -23,6 +23,27 @@
 .format:hover {
 	-fx-border-color: #BDBDBD;
 }
+.align-right {
+	-fx-background-image: url('resources/right-align.png');
+	-fx-background-position: 80%;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 20px;
+	-fx-padding: 0 0 0 3;
+}
+.align-center {
+	-fx-background-image: url('resources/center-align.png');
+	-fx-background-position: 80%;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 20px;
+	-fx-padding: 0 3 0 3;
+}
+.align-left {
+	-fx-background-image: url('resources/left-align.png');
+	-fx-background-position: 80%;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 20px;
+	-fx-padding: 0 3 0 0;
+}
 .check-box .box{
 	-fx-background-color: #EEEEEE;
 	-fx-border-color: #BDBDBD;
@@ -76,6 +97,25 @@
 .nodebutton:hover {
 	-fx-border-color: #B0B0B0;
 }
+
+.celltext .content {
+	-fx-background-color: transparent;
+}
+.celltext {
+	-fx-background-color: transparent;
+}
+.celltext .scroll-pane {
+	-fx-background-color: transparent;
+}
+.celltext .scroll-pane .viewport {
+	-fx-background-color: transparent;
+}
+
+.text-field {
+	-fx-background-color: #3498db, #EEEEEE, #EEEEEE;
+	-fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+}
+
 /*
 .styled-text-area {
 	-fx-padding: 5em;
